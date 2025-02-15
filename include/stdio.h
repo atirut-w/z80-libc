@@ -6,8 +6,11 @@ typedef struct {
   void *data; /* Empty struct is a GNU extension */
 } FILE;
 
+/* Expression of type `FILE *` associated with the input stream */
 extern FILE *stdin;
+/* Expression of type `FILE *` associated with the output stream */
 extern FILE *stdout;
+/* Expression of type `FILE *` associated with the error output stream */
 extern FILE *stderr;
 
 /* Unformatted I/O */
