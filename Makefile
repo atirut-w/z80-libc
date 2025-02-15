@@ -16,8 +16,8 @@ ASFLAGS :=
 ARFLAGS := rcs
 
 # Source files
-CSRC := $(wildcard $(SRCDIR)/*.c)
-ASRC := $(wildcard $(SRCDIR)/*.s)
+CSRC := $(shell find $(SRCDIR) -name '*.c')
+ASRC := $(shell find $(SRCDIR) -name '*.s')
 
 # Object files
 COBJ := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(CSRC))
@@ -42,6 +42,7 @@ $(BUILDDIR)/libc.a: $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.s | $(OBJDIR)
+	mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 # The (e)Z80 compiler doesn't assemble for us, so we need to do it ourselves
