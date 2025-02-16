@@ -11,7 +11,7 @@ AS := z80-elf-as
 AR := z80-elf-ar
 
 # Compiler flags
-CFLAGS := -target z80 -S -nostdinc -I$(INCLUDE) --std=c90 -pedantic-errors -O2
+CFLAGS := -target z80 -S -nostdinc -I$(INCLUDE) --std=c90 -pedantic-errors -O2 -mllvm -z80-gas-style
 ASFLAGS :=
 ARFLAGS := rcs
 
@@ -52,5 +52,3 @@ $(OBJDIR)/%.o: $(OBJDIR)/%.s
 $(OBJDIR)/%.s: $(SRCDIR)/%.c | $(OBJDIR)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -o $@ $<
-	sed -i 's/public/\.global/g' $@
-	sed -i 's/private/\.local/g' $@
