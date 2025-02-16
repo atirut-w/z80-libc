@@ -1,9 +1,10 @@
 #pragma once
 
+/* Integer expression of type `int` and a negative value */
 #define EOF (-1)
 
 typedef struct {
-  void *data; /* Empty struct is a GNU extension */
+  int fd;
 } FILE;
 
 /* Expression of type `FILE *` associated with the input stream */

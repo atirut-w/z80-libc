@@ -1,10 +1,19 @@
 #include <stdio.h>
+#include <string.h>
 
 FILE *stdin;
 FILE *stdout;
 FILE *stderr;
 
-__attribute__((weak)) int fputc(int ch, FILE *stream) {
+__attribute__((weak)) int __write(int fd, const void *buf, int count) {
+  return -1;
+}
+
+int fputc(int ch, FILE *stream) {
+  char c = ch;
+  if (__write(stream->fd, &c, 1) == 1) {
+    return ch;
+  }
   return EOF;
 }
 
@@ -13,12 +22,11 @@ int putc(int ch, FILE *stream) {
 }
 
 int fputs(const char *str, FILE *stream) {
-  while (*str) {
-    if (fputc(*str++, stream) == EOF) {
-      return EOF;
-    }
+  int len = strlen(str);
+  if (__write(stream->fd, str, len) == len) {
+    return len;
   }
-  return 0;
+  return EOF;
 }
 
 int putchar(int ch) {
