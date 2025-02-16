@@ -19,7 +19,7 @@ __attribute__((naked)) int __ashlhi3(int a, int b) {
 
     "ld sp, ix\n"
     "pop ix\n"
-    "ret"
+    "ret\n"
   );
 }
 
@@ -44,7 +44,7 @@ __attribute__((naked)) int __lshrhi3(int a, int b) {
 
     "ld sp, ix\n"
     "pop ix\n"
-    "ret"
+    "ret\n"
   );
 }
 
@@ -73,6 +73,6 @@ __attribute__((naked)) int __clzhi2(int a) {
 
     "ld sp, ix\n"
     "pop ix\n"
-    "ret"
+    "ret\n"
   );
 }

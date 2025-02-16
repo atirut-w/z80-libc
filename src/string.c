@@ -43,7 +43,7 @@ __attribute__((naked)) void *memset(void *dest, int ch, size_t count) {
 
     "ld sp, ix\n"
     "pop ix\n"
-    "ret"
+    "ret\n"
   );
 }
 
@@ -76,6 +76,6 @@ __attribute__((naked)) void *memcpy(void *dest, const void *src, size_t count) {
 
     "ld sp, ix\n"
     "pop ix\n"
-    "ret"
+    "ret\n"
   );
 }
