@@ -5,11 +5,11 @@ FILE *stdin;
 FILE *stdout;
 FILE *stderr;
 
-__attribute__((weak)) int __read(int fd, void *buf, int count) {
+__attribute__((weak)) int __read(int fd, void *buf, unsigned int count) {
   return -1;
 }
 
-__attribute__((weak)) int __write(int fd, const void *buf, int count) {
+__attribute__((weak)) int __write(int fd, const void *buf, unsigned int count) {
   return -1;
 }
 
