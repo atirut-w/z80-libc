@@ -50,6 +50,7 @@ $(OBJDIR)/%.o: $(OBJDIR)/%.s
 	$(AS) $(ASFLAGS) -march=ez80 -o $@ $<
 
 $(OBJDIR)/%.s: $(SRCDIR)/%.c | $(OBJDIR)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -o $@ $<
 	sed -i 's/public/\.global/g' $@
 	sed -i 's/private/\.local/g' $@
