@@ -5,8 +5,41 @@ FILE *stdin;
 FILE *stdout;
 FILE *stderr;
 
+__attribute__((weak)) int __read(int fd, void *buf, int count) {
+  return -1;
+}
+
 __attribute__((weak)) int __write(int fd, const void *buf, int count) {
   return -1;
+}
+
+int fgetc(FILE *stream) {
+  char c;
+  if (__read(stream->fd, &c, 1) == 1) {
+    return c;
+  }
+  return EOF;
+}
+
+int getc(FILE *stream) {
+  return fgetc(stream);
+}
+
+char *fgets(char *str, int count, FILE *stream) {
+  int i;
+  for (i = 0; i < count - 1; i++) {
+    int c = fgetc(stream);
+    if (c == EOF) {
+      break;
+    }
+    str[i] = c;
+    if (c == '\n') {
+      i++;
+      break;
+    }
+  }
+  str[i] = '\0';
+  return str;
 }
 
 int fputc(int ch, FILE *stream) {

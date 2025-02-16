@@ -16,6 +16,13 @@ extern FILE *stderr;
 
 /* Unformatted I/O */
 
+/* Gets a character from a file stream */
+int fgetc(FILE *stream);
+int getc(FILE *stream);
+
+/* Gets a character string from a file stream */
+char *fgets(char *str, int count, FILE *stream);
+
 /* Writes a character to a file stream */
 int fputc(int ch, FILE *stream);
 int putc(int ch, FILE *stream);
