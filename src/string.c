@@ -1,5 +1,13 @@
 #include <string.h>
 
+size_t strlen(const char *str) {
+  size_t len = 0;
+  while (*str++) {
+    len++;
+  }
+  return len;
+}
+
 void *memset(void *dest, int ch, size_t count) {
   unsigned char *d = dest;
   while (count--) {

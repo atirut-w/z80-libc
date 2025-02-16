@@ -1,6 +1,11 @@
 #pragma once
 #include <stddef.h>
 
+/* String examination */
+
+/* Returns the length of a given string */
+size_t strlen(const char *str);
+
 /* Character array manipulation */
 
 /* Fills a buffer with a character */
