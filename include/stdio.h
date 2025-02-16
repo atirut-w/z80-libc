@@ -1,4 +1,5 @@
 #pragma once
+#include <stddef.h>
 
 /* Integer expression of type `int` and a negative value */
 #define EOF (-1)
@@ -13,6 +14,14 @@ extern FILE *stdin;
 extern FILE *stdout;
 /* Expression of type `FILE *` associated with the error output stream */
 extern FILE *stderr;
+
+/* Direct I/O */
+
+/* Reads from a file */
+size_t fread(void *buffer, size_t size, size_t count, FILE *stream);
+
+/* Writes to a file */
+size_t fwrite(const void *buffer, size_t size, size_t count, FILE *stream);
 
 /* Unformatted I/O */
 
