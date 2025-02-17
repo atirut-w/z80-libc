@@ -70,6 +70,11 @@ char *fgets(char *str, int count, FILE *stream) {
       break;
     }
   }
+
+  if (i == 0) {
+    return NULL;
+  }
+
   str[i] = '\0';
   return str;
 }
