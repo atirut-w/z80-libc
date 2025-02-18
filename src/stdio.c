@@ -46,9 +46,9 @@ size_t fwrite(const void *buffer, size_t size, size_t count, FILE *stream) {
 }
 
 int fgetc(FILE *stream) {
-  char c;
+  unsigned char c;
   if (__read(stream->fd, &c, 1) == 1) {
-    return (unsigned char)c;
+    return c;
   }
   return EOF;
 }
@@ -80,7 +80,7 @@ char *fgets(char *str, int count, FILE *stream) {
 }
 
 int fputc(int ch, FILE *stream) {
-  char c = ch;
+  unsigned char c = ch;
   if (__write(stream->fd, &c, 1) == 1) {
     return ch;
   }
