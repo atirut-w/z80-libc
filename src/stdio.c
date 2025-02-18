@@ -104,19 +104,20 @@ int getchar(void) {
 }
 
 char *gets(char *str) {
+  char *p = str;
   int i, ch;
 
   ch = getchar();
   while (ch != EOF && ch != '\n') {
-    *str++ = ch;
+    *p++ = ch;
     ch = getchar();
   }
 
-  if (ch == EOF) {
+  if (ch == EOF && p == str) {
     return NULL;
   }
 
-  *str = '\0';
+  *p = '\0';
   return str;
 }
 
