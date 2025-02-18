@@ -39,6 +39,12 @@ int putc(int ch, FILE *stream);
 /* Writes a character string to a file stream */
 int fputs(const char *str, FILE *stream);
 
+/* Reads a character from `stdin` */
+int getchar(void);
+
+/* Reads a character string from `stdin` */
+char *gets(char *str);
+
 /* Writes a character to `stdout` */
 int putchar(int ch);
 

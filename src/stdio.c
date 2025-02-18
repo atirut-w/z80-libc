@@ -99,6 +99,27 @@ int fputs(const char *str, FILE *stream) {
   return EOF;
 }
 
+int getchar(void) {
+  return getc(stdin);
+}
+
+char *gets(char *str) {
+  int i, ch;
+
+  ch = getchar();
+  while (ch != EOF && ch != '\n') {
+    *str++ = ch;
+    ch = getchar();
+  }
+
+  if (ch == EOF) {
+    return NULL;
+  }
+
+  *str = '\0';
+  return str;
+}
+
 int putchar(int ch) {
   return putc(ch, stdout);
 }
