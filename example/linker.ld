@@ -8,7 +8,10 @@ SECTIONS {
         *(.text)
     } > TPA
     .data : {
+        ___data_start = .;
         *(.data)
+        ___data_end = .;
+        ___data_load = LOADADDR(.data);
     } > TPA
     .bss : {
         ___bss_start = .;

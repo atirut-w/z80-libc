@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 char iqueue[128];
-int ihead;
-int itail;
+int ihead = 0;
+int itail = 0;
 
 int queue_empty(void) {
   return ihead == itail;
@@ -103,6 +103,9 @@ void __exit(int status) {
   bdos(0, 0);
 }
 
+extern char __data_start[];
+extern char __data_end[];
+extern char __data_load[];
 extern char __bss_start[];
 extern char __bss_end[];
 
@@ -110,9 +113,8 @@ int main(int argc, char **argv);
 char *argv[] = {0};
 
 __attribute__((section(".header"))) void start(void) {
+  memcpy(__data_start, __data_load, __data_end - __data_start);
   memset(__bss_start, 0, __bss_end - __bss_start);
-  ihead = 0;
-  itail = 0;
 
   exit(main(0, argv));
 }
