@@ -9,13 +9,8 @@ FILE *stdin = &__stdin;
 FILE *stdout = &__stdout;
 FILE *stderr = &__stderr;
 
-__attribute__((weak)) int __read(int fd, void *buf, unsigned int count) {
-  return -1;
-}
-
-__attribute__((weak)) int __write(int fd, const void *buf, unsigned int count) {
-  return -1;
-}
+int __read(int fd, void *buf, unsigned int count);
+int __write(int fd, const void *buf, unsigned int count);
 
 size_t fread(void *buffer, size_t size, size_t count, FILE *stream) {
   unsigned char *buf = buffer;
