@@ -1,23 +1,15 @@
 #include <stdio.h>
-#include <stddef.h>
+#include <stdlib.h>
 
-void puthex(unsigned int n) {
-  char *hex = "0123456789abcdef";
-  
-  if (n >= 16) {
-    puthex(n / 16);
-  }
-  putchar(hex[n % 16]);
-}
+void f1(void) { puts("f1"); }
+
+void f2(void) { puts("f2"); }
 
 int main(void) {
-  char buf[64];
-  
-  fputs("Type something: ", stdout);
-  fgets(buf, sizeof(buf), stdin);
-  fputs("You typed: ", stdout);
-  fputs(buf, stdout);
-  fputs("\n", stdout);
+  if (!atexit(f1) && !atexit(f2) && !atexit(f2))
+    return EXIT_SUCCESS;
 
-  return 0;
-}
+  /* atexit registration failed */
+  return EXIT_FAILURE;
+
+} /* <- if registration was successful calls f2, f2, f1 */

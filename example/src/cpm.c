@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 char iqueue[128];
 int ihead;
@@ -98,6 +99,10 @@ int __write(int fd, const void *buf, unsigned int count) {
   return -1;
 }
 
+void __exit(int status) {
+  bdos(0, 0);
+}
+
 extern char __bss_start[];
 extern char __bss_end[];
 
@@ -109,7 +114,5 @@ __attribute__((section(".header"))) void start(void) {
   ihead = 0;
   itail = 0;
 
-  main(0, argv);
-
-  bdos(0, 0);
+  exit(main(0, argv));
 }
