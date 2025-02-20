@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 
-FILE *stdin;
-FILE *stdout;
-FILE *stderr;
+static FILE __stdin = {0};
+static FILE __stdout = {1};
+static FILE __stderr = {2};
+
+FILE *stdin = &__stdin;
+FILE *stdout = &__stdout;
+FILE *stderr = &__stderr;
 
 __attribute__((weak)) int __read(int fd, void *buf, unsigned int count) {
   return -1;

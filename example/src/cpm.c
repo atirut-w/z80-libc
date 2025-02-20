@@ -75,7 +75,7 @@ int __read(int fd, void *buf, unsigned int count) {
     } while (ch != '\n');
 
     return i;
-  } else if (fd != 1) {
+  } else if (fd != 1 && fd != 2) {
     return -1; /* TODO: Implement file I/O */
   }
 
@@ -83,7 +83,7 @@ int __read(int fd, void *buf, unsigned int count) {
 }
 
 int __write(int fd, const void *buf, unsigned int count) {
-  if (fd == 1) {
+  if (fd == 1 || fd == 2) {
     int i;
 
     for (i = 0; i < count; i++) {
@@ -108,13 +108,6 @@ __attribute__((section(".header"))) void start(void) {
   memset(__bss_start, 0, __bss_end - __bss_start);
   ihead = 0;
   itail = 0;
-
-  cpm_in.fd = 0;
-  cpm_out.fd = 1;
-
-  stdin = &cpm_in;
-  stdout = &cpm_out;
-  stderr = &cpm_out;
 
   main(0, argv);
 
