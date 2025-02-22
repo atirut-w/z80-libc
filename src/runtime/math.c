@@ -1,4 +1,4 @@
-int __mulhi3(int a, int b) {
+int _smulu(int a, int b) {
   int sign, i;
   unsigned int ua, ub, prod;
 
@@ -25,7 +25,7 @@ int __mulhi3(int a, int b) {
   return prod;
 }
 
-int __divhi3(int a, int b) {
+int _sdivs(int a, int b) {
   int sign, i;
   unsigned int ua, ub, quot, rem;
 
@@ -57,7 +57,7 @@ int __divhi3(int a, int b) {
   return quot;
 }
 
-int __modhi3(int a, int b) {
+int _srems(int a, int b) {
   int i;
   unsigned int ua, ub, quot, rem;
 

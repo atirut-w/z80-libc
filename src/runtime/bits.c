@@ -1,4 +1,4 @@
-__attribute__((naked)) int __ashlhi3(int a, int b) {
+__attribute__((naked)) int _sshl(int a, int b) {
   __asm__(
     "push ix\n"
     "ld ix, 0\n"
@@ -23,7 +23,7 @@ __attribute__((naked)) int __ashlhi3(int a, int b) {
   );
 }
 
-__attribute__((naked)) int __ashrhi3(int a, int b) {
+__attribute__((naked)) int _sshr(int a, int b) {
   __asm__(
     "push ix\n"
     "ld ix, 0\n"
@@ -48,7 +48,7 @@ __attribute__((naked)) int __ashrhi3(int a, int b) {
   );
 }
 
-__attribute__((naked)) int __lshrhi3(int a, int b) {
+__attribute__((naked)) int _sshru(unsigned int a, unsigned int b) {
   __asm__(
     "push ix\n"
     "ld ix, 0\n"
@@ -73,7 +73,7 @@ __attribute__((naked)) int __lshrhi3(int a, int b) {
   );
 }
 
-__attribute__((naked)) int __clzhi2(int a) {
+__attribute__((naked)) int _sctlz(int a) {
   __asm__(
     "push ix\n"
     "ld ix, 0\n"
