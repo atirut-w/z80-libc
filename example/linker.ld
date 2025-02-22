@@ -18,4 +18,9 @@ SECTIONS {
         *(.bss)
         ___bss_end = .;
     } > TPA
+    .heap : {
+        ___heap_start = .;
+        . += 512;
+        ___heap_end = .;
+    } > TPA
 }
