@@ -38,7 +38,7 @@ __attribute__((naked)) int _sshr(int a, int b) {
     "or a\n"
     "jr z, 1f\n"
     "sra h\n"
-    "srl l\n"
+    "rr l\n"
     "djnz 0b\n"
     "1:\n"
 
