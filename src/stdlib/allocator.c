@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 /* Implementation for `malloc` and co. lovingly (?) taken from https://github.com/RAGUL1902/Dynamic-Memory-Allocation-in-C */
 
@@ -14,8 +15,6 @@ typedef struct block {
 #define BLOCK_SIZE (sizeof(block_t) - 1)
 
 block_t *head = NULL;
-int __brk(void *addr);
-void *__sbrk(int increment);
 
 static block_t *find_block(block_t **last, size_t size) {
   block_t *b = head;
@@ -53,8 +52,8 @@ static block_t *merge_blocks(block_t *block) {
 
 static block_t *extend_heap(block_t *last, size_t size) {
   block_t *old, *new;
-  old = __sbrk(0);
-  new = __sbrk(size + BLOCK_SIZE);
+  old = sbrk(0);
+  new = sbrk(size + BLOCK_SIZE);
   if (new == (void *)-1) {
     return NULL;
   }
@@ -186,7 +185,7 @@ void free(void *ptr) {
       } else {
         head = NULL;
       }
-      __brk(block);
+      brk(block);
     }
   }
 }

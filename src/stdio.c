@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 static FILE __stdin = {0};
 static FILE __stdout = {1};
@@ -8,9 +9,6 @@ static FILE __stderr = {2};
 FILE *stdin = &__stdin;
 FILE *stdout = &__stdout;
 FILE *stderr = &__stderr;
-
-int __read(int fd, void *buf, unsigned int count);
-int __write(int fd, const void *buf, unsigned int count);
 
 size_t fread(void *buffer, size_t size, size_t count, FILE *stream) {
   unsigned char *buf = buffer;
@@ -46,7 +44,7 @@ size_t fwrite(const void *buffer, size_t size, size_t count, FILE *stream) {
 
 int fgetc(FILE *stream) {
   unsigned char c;
-  if (__read(stream->fd, &c, 1) == 1) {
+  if (read(stream->fd, &c, 1) == 1) {
     return c;
   }
   return EOF;
@@ -80,7 +78,7 @@ char *fgets(char *str, int count, FILE *stream) {
 
 int fputc(int ch, FILE *stream) {
   unsigned char c = ch;
-  if (__write(stream->fd, &c, 1) == 1) {
+  if (write(stream->fd, &c, 1) == 1) {
     return ch;
   }
   return EOF;
@@ -92,7 +90,7 @@ int putc(int ch, FILE *stream) {
 
 int fputs(const char *str, FILE *stream) {
   int len = strlen(str);
-  if (__write(stream->fd, str, len) == len) {
+  if (write(stream->fd, str, len) == len) {
     return len;
   }
   return EOF;
