@@ -11,7 +11,7 @@ LD := z80-elf-ld
 OBJCOPY := z80-elf-objcopy
 
 # Compiler flags
-CFLAGS := -target z80 -S -nostdinc -I$(PREFIX)/include --std=c90 -pedantic-errors -O0 -mllvm -z80-gas-style
+CFLAGS := -target z80 -S -nostdinc -I$(PREFIX)/include --std=c90 -pedantic-errors -Os -mllvm -z80-gas-style
 LDFLAGS := -T linker.ld
 LDLIBS := -L$(PREFIX)/lib -lc
 

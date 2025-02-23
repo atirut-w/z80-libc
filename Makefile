@@ -11,7 +11,7 @@ AS := z80-elf-as
 AR := z80-elf-ar
 
 # Compiler flags
-CFLAGS := -target z80 -S -nostdinc -I$(INCLUDE) --std=c90 -pedantic-errors -O2 -mllvm -z80-gas-style
+CFLAGS := -target z80 -S -nostdinc -I$(INCLUDE) --std=c90 -pedantic-errors -Os -mllvm -z80-gas-style
 ASFLAGS :=
 ARFLAGS := rcs
 
