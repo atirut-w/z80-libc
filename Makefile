@@ -33,7 +33,7 @@ clean:
 
 install:
 	cp $(BUILDDIR)/libc.a $(PREFIX)/lib
-	cp $(INCLUDE)/* $(PREFIX)/include
+	cp -r $(INCLUDE)/* $(PREFIX)/include
 
 $(BUILDDIR) $(OBJDIR):
 	mkdir -p $@
