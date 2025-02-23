@@ -46,7 +46,7 @@ __attribute__((naked)) int bdos(int func, int de) {
   );
 }
 
-int __read(int fd, void *buf, unsigned int count) {
+int read(int fd, void *buf, size_t count) {
   if (fd == 0) {
     int i = 0;
     char ch;
@@ -82,7 +82,7 @@ int __read(int fd, void *buf, unsigned int count) {
   return -1;
 }
 
-int __write(int fd, const void *buf, unsigned int count) {
+int write(int fd, const void *buf, size_t count) {
   if (fd == 1 || fd == 2) {
     int i;
 
@@ -98,7 +98,7 @@ int __write(int fd, const void *buf, unsigned int count) {
   return -1;
 }
 
-void __exit(int status) {
+void _exit(int status) {
   bdos(0, 0);
 }
 

@@ -1,11 +1,10 @@
 #include <stdlib.h>
+#include <unistd.h>
 
 #define MAX_ATEXIT 32
 
 static void (*atexit_funcs[MAX_ATEXIT])(void);
 static int atexit_count;
-
-void __exit(int status);
 
 void exit(int status) {
   int i = 0;
@@ -13,7 +12,7 @@ void exit(int status) {
   for (i = atexit_count - 1; i >= 0; i--) {
     atexit_funcs[i]();
   }
-  __exit(status);
+  _exit(status);
 }
 
 int atexit(void (*func)(void)) {
