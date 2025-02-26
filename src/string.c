@@ -135,3 +135,16 @@ __attribute__((naked)) void *memcpy(void *dest, const void *src, size_t count) {
     "ret\n"
   );
 }
+
+void *memmove(void *dest, const void *src, size_t count) {
+  if (dest < src) {
+    memcpy(dest, src, count);
+  } else {
+    char *d = dest;
+    const char *s = src;
+    d += count;
+    s += count;
+    while (count--) *--d = *--s;
+  }
+  return dest;
+}
