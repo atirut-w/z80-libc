@@ -2,46 +2,6 @@
 #include <string.h>
 #include <unistd.h>
 
-static FILE __stdin = {0};
-static FILE __stdout = {1};
-static FILE __stderr = {2};
-
-FILE *stdin = &__stdin;
-FILE *stdout = &__stdout;
-FILE *stderr = &__stderr;
-
-size_t fread(void *buffer, size_t size, size_t count, FILE *stream) {
-  unsigned char *buf = buffer;
-  size_t i, j;
-
-  for (i = 0; i < count; i++) {
-    for (j = 0; j < size; j++) {
-      int c = fgetc(stream);
-      if (c == EOF) {
-        return i;
-      }
-      *buf++ = c;
-    }
-  }
-
-  return i;
-}
-
-size_t fwrite(const void *buffer, size_t size, size_t count, FILE *stream) {
-  const unsigned char *buf = buffer;
-  size_t i, j;
-
-  for (i = 0; i < count; i++) {
-    for (j = 0; j < size; j++) {
-      if (fputc(*buf++, stream) == EOF) {
-        return i;
-      }
-    }
-  }
-
-  return i;
-}
-
 int fgetc(FILE *stream) {
   unsigned char c;
   if (read(stream->fd, &c, 1) == 1) {
