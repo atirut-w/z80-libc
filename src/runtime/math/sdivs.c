@@ -1,15 +1,27 @@
+#include <limits.h>
+
 int _sdivs(int a, int b) {
   int sign, i;
   unsigned int ua, ub, quot, rem;
 
-  if (b == 0) {
-    return 0; /* TODO: Raise exception, somehow */
-  }
-
+  /* Division by zero is undefined in C90, so we can omit the check */
+  
   sign = ((a ^ b) < 0);
 
-  ua = (a < 0) ? -a : a;
-  ub = (b < 0) ? -b : b;
+  /* INT_MIN/-1 handling is implementation-defined, we can handle it directly */
+  
+  /* Be careful with INT_MIN, can't just negate it */
+  if (a == INT_MIN) {
+    ua = (unsigned int)INT_MAX + 1;
+  } else {
+    ua = (a < 0) ? -a : a;
+  }
+
+  if (b == INT_MIN) {
+    ub = (unsigned int)INT_MAX + 1;
+  } else {
+    ub = (b < 0) ? -b : b;
+  }
 
   quot = 0;
   rem = 0;
