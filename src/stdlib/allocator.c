@@ -51,21 +51,30 @@ static block_t *merge_blocks(block_t *block) {
 }
 
 static block_t *extend_heap(block_t *last, size_t size) {
-  block_t *old, *new;
-  old = sbrk(0);
-  new = sbrk(size + BLOCK_SIZE);
-  if (new == (void *)-1) {
+  block_t *block;
+  void *mem;
+  
+  /* Get current program break */
+  mem = sbrk(0);
+  
+  /* Request additional memory */
+  if (sbrk(size + BLOCK_SIZE) == (void *)-1) {
     return NULL;
   }
-  old->size = size;
-  old->free = 0;
-  old->next = NULL;
-  old->prev = last;
+  
+  /* Initialize the new block at the old program break */
+  block = (block_t *)mem;
+  block->size = size;
+  block->free = 0;
+  block->next = NULL;
+  block->prev = last;
+  
+  /* Link with the previous block if it exists */
   if (last) {
-    last->next = old;
+    last->next = block;
   }
 
-  return old;
+  return block;
 }
 
 static int is_addr_valid(void *ptr) {
@@ -86,9 +95,8 @@ static block_t *get_block_addr(void *ptr) {
 void *malloc(size_t size) {
   block_t *block, *last;
 
-  if (size <= 0) {
-    return NULL;
-  }
+  /* In C90, malloc(0) is implementation-defined - can return NULL or valid ptr */
+  /* We'll allow zero-sized allocations to work normally */
 
   if (head) {
     last = head;
@@ -117,12 +125,9 @@ void *malloc(size_t size) {
 
 void *calloc(size_t num, size_t size) {
   void *ptr = malloc(num * size);
-  size_t i;
 
   if (ptr) {
-    for (i = 0; i < num * size; i++) {
-      ((char *)ptr)[i] = 0;
-    }
+    memset(ptr, 0, num * size);
   }
 
   return ptr;
@@ -173,19 +178,27 @@ void free(void *ptr) {
     block_t *block = get_block_addr(ptr);
     block->free = 1;
     
+    /* Try to merge with previous block if it's free */
     if (block->prev && block->prev->free) {
       block = merge_blocks(block->prev);
     }
 
+    /* Try to merge with next block if it exists */
     if (block->next) {
       block = merge_blocks(block);
     } else {
+      /* Last block in the list, consider returning memory to the system */
       if (block->prev) {
+        /* There are previous blocks, just unlink this one */
         block->prev->next = NULL;
       } else {
+        /* This is the only block, remove it from the list */
         head = NULL;
       }
-      brk(block);
+      
+      /* Return memory to the system by moving the program break */
+      /* Use the correct address - the beginning of this block */
+      brk((void*)block);
     }
   }
 }
