@@ -15,23 +15,33 @@ int getc(FILE *stream) {
 }
 
 char *fgets(char *str, int count, FILE *stream) {
-  int i;
-  for (i = 0; i < count - 1; i++) {
-    int c = fgetc(stream);
+  int i = 0;
+  int c;
+
+  /* C90 doesn't require parameter validation - undefined behavior if invalid */
+  
+  /* Read characters until newline, EOF, or count-1 characters read */
+  while (i < count - 1) {
+    c = fgetc(stream);
+    
+    /* Check for EOF */
     if (c == EOF) {
-      break;
+      if (i == 0) {
+        return NULL;  /* No characters read before EOF */
+      }
+      break;  /* Some characters read before EOF */
     }
-    str[i] = c;
+    
+    /* Store the character */
+    str[i++] = c;
+    
+    /* Break if newline */
     if (c == '\n') {
-      i++;
       break;
     }
   }
 
-  if (i == 0) {
-    return NULL;
-  }
-
+  /* Null-terminate the string */
   str[i] = '\0';
   return str;
 }
@@ -51,7 +61,7 @@ int putc(int ch, FILE *stream) {
 int fputs(const char *str, FILE *stream) {
   int len = strlen(str);
   if (write(stream->fd, str, len) == len) {
-    return len;
+    return 0;  /* Success return value should be non-negative per C standard */
   }
   return EOF;
 }
@@ -61,8 +71,9 @@ int getchar(void) {
 }
 
 char *gets(char *str) {
+  /* C90 implementation: reads until newline or EOF */
   char *p = str;
-  int i, ch;
+  int ch;
 
   ch = getchar();
   while (ch != EOF && ch != '\n') {
